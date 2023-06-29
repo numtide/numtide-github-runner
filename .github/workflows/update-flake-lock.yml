@@ -1,0 +1,26 @@
+name: update-flake-lock
+on:
+  workflow_dispatch: # allows manual triggering
+  schedule:
+    - cron: '0 1 * * 1,4' # Run twice a week
+
+jobs:
+  lockfile:
+    runs-on: ubuntu-latest
+    permissions:
+      # If you see "GitHub Actions is not permitted to create or approve pull requests."
+      # Settings -> Actions -> General -> check "Allow GitHub Actions to create and approve pull requests" -> Save
+      pull-requests: write
+      contents: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      - name: Install Nix
+        uses: cachix/install-nix-action@v20
+      - name: Update flake.lock
+        uses: DeterminateSystems/update-flake-lock@v19
+      - name: Auto-merge PR
+        run: gh pr merge --auto --merge "$PULL_REQUEST_NUMBER"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+

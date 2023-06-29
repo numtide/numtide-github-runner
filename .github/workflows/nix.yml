@@ -1,0 +1,23 @@
+name: Nix
+on:
+  push:
+    branches:
+      - main
+      - staging
+      - trying
+  pull_request:
+  workflow_dispatch:
+jobs:
+  build:
+    strategy:
+      matrix:
+        system:
+          # FIXME: fix bld
+          # - aarch64-darwin
+          # - aarch64-linux
+          # - x86_64-darwin
+          - x86_64-linux
+    runs-on: [nix]
+    steps:
+      - uses: actions/checkout@v3
+      - run: ./ci.sh --system ${{ matrix.system }}
