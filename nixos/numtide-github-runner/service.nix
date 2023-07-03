@@ -3,6 +3,7 @@
 , name
 , nix
 , cfg
+, config
 
 , systemdDir
   # %t: Runtime directory root (usually /run); see systemd.unit(5)
@@ -153,7 +154,7 @@ in
   } // cfg.extraEnvironment;
 
   path = [
-    nix
+    config.nix.package
     pkgs.bash
     pkgs.cachix
     pkgs.coreutils
@@ -217,7 +218,7 @@ in
     AmbientCapabilities = "";
     CapabilityBoundingSet = "";
     # ProtectClock= adds DeviceAllow=char-rtc r
-    DeviceAllow = "";
+    DeviceAllow = [ "/dev/kvm" ];
     NoNewPrivileges = true;
     PrivateDevices = true;
     PrivateMounts = true;
@@ -270,8 +271,5 @@ in
     # Note that this has some interactions with the User setting; so you may
     # want to consult the systemd docs if using both.
     DynamicUser = true;
-
-    DeviceAllow = [ "/dev/kvm" ];
-    PrivateDevices = false;
   };
 }

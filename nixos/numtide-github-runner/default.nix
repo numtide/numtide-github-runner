@@ -203,9 +203,8 @@ in
       rec {
         name = "${cfg.name}-${n}";
         value = import ./service.nix {
-          inherit name lib pkgs cfg;
-          systemdDir = "numtide-github-runner/${n}";
-          nix = config.nix.package;
+          inherit name lib pkgs cfg config;
+          systemdDir = "${cfg.name}/${n}";
         };
       }
     ) (range 1 cfg.count));
