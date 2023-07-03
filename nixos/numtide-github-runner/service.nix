@@ -1,7 +1,6 @@
 { lib
 , pkgs
 , name
-, nix
 , cfg
 , config
 
@@ -18,6 +17,7 @@
 
 with lib;
 let
+  svcName = name;
   currentConfigTokenPath = "$STATE_DIRECTORY/${currentConfigTokenFilename}";
   # Wrapper script which expects the full path of the state, runtime and logs
   # directory as arguments. Overrides the respective systemd variables to provide
