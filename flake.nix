@@ -16,6 +16,7 @@
 
     checks = self.lib.eachSystem (import ./checks inputs);
     nixosModules.numtide-github-runner = import ./nixos/numtide-github-runner inputs;
+    nixosModules.default = self.nixosModules.numtide-github-runner;
     nixosConfigurations = import ./configurations.nix inputs;
   };
 }
