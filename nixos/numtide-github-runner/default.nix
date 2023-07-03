@@ -201,10 +201,10 @@ in
 
     systemd.services = builtins.listToAttrs (map (n:
       rec {
-        name = "${cfg.name}-${n}";
+        name = "${cfg.name}-${toString n}";
         value = import ./service.nix {
           inherit name lib pkgs cfg config;
-          systemdDir = "${cfg.name}/${n}";
+          systemdDir = "${cfg.name}/${toString n}";
         };
       }
     ) (range 1 cfg.count));
