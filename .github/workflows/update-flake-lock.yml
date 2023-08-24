@@ -18,7 +18,7 @@ jobs:
       - name: Install Nix
         uses: cachix/install-nix-action@v22
       - name: Update flake.lock
-        uses: DeterminateSystems/update-flake-lock@v19
+        uses: DeterminateSystems/update-flake-lock@v20
       - name: Auto-merge PR
         run: gh pr merge --auto --merge "$PULL_REQUEST_NUMBER"
         env:
